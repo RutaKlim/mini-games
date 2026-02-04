@@ -26,11 +26,17 @@ extra for fun:
 public class Notes_and_crosses {
     public static void main(String [] args) {
        Table table = new Table();
-       table.setPositionForPlayer1(1);
-       table.setPositionForPlayer2(0);
-       table.setPositionForPlayer2(5);
+       table.startGame();
+       boolean gameWon = false;
+       while (!gameWon) {
+            table.drawTable();
+            table.setPlayerTurn();
 
-       table.drawTable();
+       }
+//       table.setPosition(0, 0, true);
+//       table.setPosition(1,4, false);
+//       table.setPosition(1, 1, false);
+
     }
 
 }

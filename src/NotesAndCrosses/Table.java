@@ -1,6 +1,6 @@
 package NotesAndCrosses;
 
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class Table {
     /*
@@ -13,23 +13,65 @@ public class Table {
     // player 1 is true
     // player 2 is false
 
-    final String PLAYER1 = "x";
-    final String PLAYER2 = "o";
+    final String PLAYER_X = "x";
+    final String PLAYER_O = "o";
 
-    String[] values = new String[] {" ", " ", " ", " ", " ", " ", " ", " ", " "};
+    boolean player1;
+    int playerNum;
 
-    public void setPositionForPlayer1(int p) {
-        values[p] = PLAYER1;
+    String[][] values = new String[][] {{" ", " ", " "}, {" ", " ", " "}, {" ", " ", " "}};
+
+//    public void setPosition(int row, int col, boolean player1) throws IllegalArgumentException {
+//        if (row > 3 || row < 0 || col < 0 || col > 3) {
+//            throw new IllegalArgumentException("You entered row as: "+ row +", and column as: "+ col +", where both have must be 0 to 3.");
+//        }
+//        if (player1) { values[row][col] = PLAYER1; } else { values[row][col] = PLAYER2; }
+//    }
+
+    public void setPlayerTurn() {
+        if (player1) { playerNum = 'x'; } else { playerNum = 'o'; }
     }
-    public void setPositionForPlayer2(int p) {
-        values[p] = PLAYER2;
+
+    // this returns whether a given player has won the game was won
+    // false for not won, and true that that player has won
+    public boolean gameWon(boolean player1) {
+        this.player1 = player1;
+        return false;
+    }
+
+    public void printGo() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Player "+ playerNum +"'s go. Enter coordinate (x,y) from top left of position to mark: ");
+        String text = sc.nextLine();
+        text = text.trim();
+        int indexOfComma = text.indexOf(",");
+        int row = Integer.parseInt(text.substring(indexOfComma - 1, indexOfComma));
+        int col = Integer.parseInt(text.substring(indexOfComma + 1, indexOfComma + 2));
+        
+    }
+
+    public void startGame() {
+        System.out.println("First to have a line of 3 wins. To enter coordinates write \"x,y\"" );
+
+        // set a random player to start
+        double rand = Math.random();
+        player1 = rand > 0.5;
+
+        setPlayerTurn();
+    }
+
+    public void setPosition(int row, int col, boolean player1) {
+        this.player1 = player1;
+        setPlayerTurn();
+        if (row > 3 || row < 0 || col < 0 || col > 3) {  }
+        if (player1) { values[row][col] = PLAYER_X; } else { values[row][col] = PLAYER_O; }
     }
 
     public void drawTable() {
         System.out.println();
-        for (int i = 0; i < 3; i++ ) {
-            System.out.println("  "+ values[i*3] +"  |  "+ values[i*3+1] +"  |  "+ values[i*3+2]);
-            if (i < 2) {  System.out.println("-----+-----+-----"); }
+        for (int r = 0; r < 3; r++ ) {
+                System.out.println("  "+ values[r][0] +"  |  "+ values[r][1] +"  |  "+ values[r][2]);
+                if (r < 2) {  System.out.println("-----+-----+-----"); }
         }
     }
 }
